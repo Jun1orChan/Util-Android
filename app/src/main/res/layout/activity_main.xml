@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnAppUtil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AppUtil"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:id="@+id/btnClipboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clipboard"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:id="@+id/btnPinyin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pinyin"
+        android:textAllCaps="false"/>
+</LinearLayout>
