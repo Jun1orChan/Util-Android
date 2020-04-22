@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-//apply from: 'upload.gradle'
 apply plugin: 'com.novoda.bintray-release'
 android {
     compileSdkVersion 28

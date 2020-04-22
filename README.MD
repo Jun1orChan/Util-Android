@@ -2,15 +2,12 @@
 
 ## 引用
 
-1.在根目录build.gradle文件中添加
+
+1.项目build.gradle文件中添加
 
 ```gradle
 
- ```
-
-2.项目build.gradle文件中添加
-
-```gradle
+    implementation 'org.jun1or.baselib:util:1.0.0'
 
  ```
 
