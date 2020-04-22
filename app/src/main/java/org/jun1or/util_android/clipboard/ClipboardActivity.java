@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import org.jun1or.util.ClipboardUtil;
 import org.jun1or.util.StorageUtil;
-import com.istrong.util_android.R;
+import org.jun1or.util_android.R;
 
 import java.io.File;
 

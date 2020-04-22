@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.jun1or.util.PinyinUtil;
-import com.istrong.util_android.R;
+import org.jun1or.util_android.R;
 
 public class PinyinActivity extends AppCompatActivity implements View.OnClickListener {
 
