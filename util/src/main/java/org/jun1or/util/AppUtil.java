@@ -22,8 +22,9 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.provider.Telephony;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.FileProvider;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,12 +33,14 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
+ * App相关工具类
  * Created by Junior on 2018/1/25.
  */
 
 public class AppUtil {
 
-    private static final char HEX_DIGITS[] =
+
+    private static final char[] HEX_DIGITS =
             {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     /**
@@ -158,8 +161,10 @@ public class AppUtil {
      * @param packageName 包名
      * @return App 名称
      */
-    public static String getAppName(Context context, final String packageName) {
-        if (isSpace(packageName)) return null;
+    public static String getAppName(Context context, String packageName) {
+        if (isSpace(packageName)) {
+            return null;
+        }
         try {
             PackageManager pm = context.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(packageName, 0);
@@ -186,7 +191,9 @@ public class AppUtil {
      * @return App 版本号
      */
     public static String getAppVersionName(Context context, final String packageName) {
-        if (isSpace(packageName)) return null;
+        if (isSpace(packageName)) {
+            return null;
+        }
         try {
             PackageManager pm = context.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(packageName, 0);
@@ -212,8 +219,10 @@ public class AppUtil {
      * @param packageName 包名
      * @return App 版本码
      */
-    public static int getAppVersionCode(Context context, final String packageName) {
-        if (isSpace(packageName)) return -1;
+    public static int getAppVersionCode(Context context, String packageName) {
+        if (isSpace(packageName)) {
+            return -1;
+        }
         try {
             PackageManager pm = context.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(packageName, 0);
@@ -254,8 +263,16 @@ public class AppUtil {
     }
 
 
-    private static boolean isSpace(final String s) {
-        if (s == null) return true;
+    /**
+     * 是否空格
+     *
+     * @param s
+     * @return
+     */
+    private static boolean isSpace(String s) {
+        if (s == null) {
+            return true;
+        }
         for (int i = 0, len = s.length(); i < len; ++i) {
             if (!Character.isWhitespace(s.charAt(i))) {
                 return false;
@@ -284,13 +301,17 @@ public class AppUtil {
      */
     public static void openGPSSetting(Context context) {
         Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        context.startActivity(myIntent);
+        try {
+            context.startActivity(myIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * 安装程序
      *
-     * @param context
+     * @param context   上下文
      * @param authority 7.0 及以上安装需要传入清单文件中的{@code <provider>}的 authorities 属性
      * @param apkPath   安装包的路径
      */
@@ -299,19 +320,16 @@ public class AppUtil {
             return;
         }
         try {
-            chmod("777", apkPath); //更改文件权限，三星手机
+            //更改文件权限，三星手机
+            chmod("777", apkPath);
         } catch (Exception e) {
             e.printStackTrace();
         }
         Intent i = new Intent(Intent.ACTION_VIEW);
-//        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        i.setDataAndType(Uri.fromFile(new File(apkPath)),
-//                "application/vnd.android.package-archive");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Uri contentUri = FileProvider.getUriForFile(context, authority, new File(apkPath));
             i.setDataAndType(contentUri, "application/vnd.android.package-archive");
-
         } else {
             i.setDataAndType(Uri.fromFile(new File(apkPath)), "application/vnd.android.package-archive");
         }
@@ -347,8 +365,9 @@ public class AppUtil {
         try {
             PackageInfo pckInfo = context.getPackageManager()
                     .getPackageInfo(pckName, 0);
-            if (pckInfo != null)
+            if (pckInfo != null) {
                 return true;
+            }
         } catch (PackageManager.NameNotFoundException ignored) {
         }
         return false;
@@ -386,9 +405,7 @@ public class AppUtil {
         } else {
             uri = Uri.fromFile(new File(filepath));
         }
-        /* 调用getMIMEType()来取得MimeType */
         String type = getMIMEType(filepath);
-        /* 设置intent的file与MimeType */
         intent.setDataAndType(uri, type);
         if (isIntentAvailable(c, intent)) {
             c.startActivity(intent);
@@ -406,8 +423,9 @@ public class AppUtil {
         /* 获取文件的后缀名 */
         String end = FileUtil.getFileExt(filepath).toLowerCase();
         for (int i = 0; i < MIME_TYPE.length; i++) {
-            if (end.equals(MIME_TYPE[i][0]))
+            if (end.equals(MIME_TYPE[i][0])) {
                 type = MIME_TYPE[i][1];
+            }
         }
         return type;
     }
@@ -422,7 +440,7 @@ public class AppUtil {
     public static void sendSms(Context context, String phone, String body) {
         Intent sendIntent;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(context); //Need to change the build to API 19
+            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(context);
             sendIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + phone));
             sendIntent.putExtra("sms_body", body);
             if (defaultSmsPackageName != null) {
@@ -434,8 +452,9 @@ public class AppUtil {
             sendIntent.setType("vnd.android-dir/mms-sms");
         }
         sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (isIntentAvailable(context, sendIntent))
+        if (isIntentAvailable(context, sendIntent)) {
             context.startActivity(sendIntent);
+        }
     }
 
     /**
@@ -462,7 +481,11 @@ public class AppUtil {
     public static void dial(Context context, String phoneNumber) {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        try {
+            context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -474,13 +497,14 @@ public class AppUtil {
      * @return
      */
     public static String getRealPathFromURI(Context context, Uri uri) {
-        if (uri == null)
+        if (uri == null) {
             return null;
-        final String scheme = uri.getScheme();
+        }
+        String scheme = uri.getScheme();
         String data = null;
-        if (scheme == null)
+        if (scheme == null) {
             data = uri.getPath();
-        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
+        } else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
             data = uri.getPath();
         } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
             Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
@@ -508,9 +532,10 @@ public class AppUtil {
      */
     @TargetApi(19)
     public static String getImageAbsolutePath(Context context, Uri imageUri) {
-        if (context == null || imageUri == null)
+        if (context == null || imageUri == null) {
             return null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, imageUri)) {
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, imageUri)) {
             if (isExternalStorageDocument(imageUri)) {
                 String docId = DocumentsContract.getDocumentId(imageUri);
                 String[] split = docId.split(":");
@@ -541,8 +566,9 @@ public class AppUtil {
         } // MediaStore (and general)
         else if ("content".equalsIgnoreCase(imageUri.getScheme())) {
             // Return the remote address
-            if (isGooglePhotosUri(imageUri))
+            if (isGooglePhotosUri(imageUri)) {
                 return imageUri.getLastPathSegment();
+            }
             return getDataColumn(context, imageUri, null, null);
         }
         // File
@@ -563,8 +589,9 @@ public class AppUtil {
                 return cursor.getString(index);
             }
         } finally {
-            if (cursor != null)
+            if (cursor != null) {
                 cursor.close();
+            }
         }
         return null;
     }
@@ -632,9 +659,13 @@ public class AppUtil {
     }
 
     private static String getAppSignatureHash(Context context, final String packageName, final String algorithm) {
-        if (isSpace(packageName)) return "";
+        if (isSpace(packageName)) {
+            return "";
+        }
         Signature[] signature = getAppSignature(context, packageName);
-        if (signature == null || signature.length <= 0) return "";
+        if (signature == null || signature.length <= 0) {
+            return "";
+        }
         return bytes2HexString(hashTemplate(signature[0].toByteArray(), algorithm))
                 .replaceAll("(?<=[0-9A-F]{2})[0-9A-F]{2}", ":$0");
     }
@@ -647,7 +678,9 @@ public class AppUtil {
      * @return
      */
     public static Signature[] getAppSignature(Context context, String packageName) {
-        if (isSpace(packageName)) return null;
+        if (isSpace(packageName)) {
+            return null;
+        }
         try {
             PackageManager pm = context.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
@@ -659,9 +692,13 @@ public class AppUtil {
     }
 
     private static String bytes2HexString(final byte[] bytes) {
-        if (bytes == null) return "";
+        if (bytes == null) {
+            return "";
+        }
         int len = bytes.length;
-        if (len <= 0) return "";
+        if (len <= 0) {
+            return "";
+        }
         char[] ret = new char[len << 1];
         for (int i = 0, j = 0; i < len; i++) {
             ret[j++] = HEX_DIGITS[bytes[i] >> 4 & 0x0f];
@@ -671,7 +708,9 @@ public class AppUtil {
     }
 
     private static byte[] hashTemplate(final byte[] data, final String algorithm) {
-        if (data == null || data.length <= 0) return null;
+        if (data == null || data.length <= 0) {
+            return null;
+        }
         try {
             MessageDigest md = MessageDigest.getInstance(algorithm);
             md.update(data);

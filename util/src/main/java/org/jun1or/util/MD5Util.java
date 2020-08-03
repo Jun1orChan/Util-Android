@@ -4,11 +4,13 @@ import java.security.MessageDigest;
 
 /**
  * MD5加密
+ *
+ * @author cwj
  */
-public class MD5 {
+public class MD5Util {
 
-    public static String EncoderByMd5(String s, String charsetName) {
-        char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+    public static String encoderByMd5(String s, String charsetName) {
+        char[] hexDigits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                 'a', 'b', 'c', 'd', 'e', 'f'};
 
         try {
@@ -37,8 +39,8 @@ public class MD5 {
      * @param s
      * @return 结果
      */
-    public static String EncoderByMd5(String s) {
-        return EncoderByMd5(s, "gbk");
+    public static String encoderByMd5(String s) {
+        return encoderByMd5(s, "utf-8");
     }
 
 }

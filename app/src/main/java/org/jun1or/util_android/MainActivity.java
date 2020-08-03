@@ -1,14 +1,15 @@
 package org.jun1or.util_android;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.jun1or.util.StatusBarUtil;
 import org.jun1or.util_android.apputil.AppUtilActivity;
 import org.jun1or.util_android.clipboard.ClipboardActivity;
 import org.jun1or.util_android.pinyin.PinyinActivity;
-import org.jun1or.util.StatusBarUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

@@ -7,11 +7,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+/**
+ * 文件操作类
+ *
+ * @author cwj
+ */
 public class SPUtil {
+
     /**
      * 保存在手机里面的文件名
      */
-    public static final String FILE_NAME = "iStrong_preferences";
+    public static final String FILE_NAME = "jun1or_prefs";
 
     /**
      * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法

@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "org.jun1or.util_android"
         minSdkVersion 17
@@ -19,7 +19,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation "androidx.appcompat:appcompat:1.1.0"
 //    implementation project(':util')
-    implementation 'org.jun1or.baselib:util:1.0.0'
+    implementation 'org.jun1or.baselib:util:1.0.1'
 }

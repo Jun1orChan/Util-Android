@@ -8,7 +8,6 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -22,6 +21,8 @@ import java.util.regex.Pattern;
 
 /**
  * Created by Junior on 2018/1/25.
+ *
+ * @author cwj
  */
 
 public class DeviceUtil {
@@ -39,6 +40,8 @@ public class DeviceUtil {
     private static boolean sIsTabletValue = false;
     private static String sMiuiVersionName;
     private static String sFlymeVersionName;
+
+    private static Pattern mPattern = Pattern.compile("(\\d+\\.){2}\\d");
 
 
     static {
@@ -131,8 +134,8 @@ public class DeviceUtil {
         //查不到默认高于5.2.4
         boolean isHigher = true;
         if (sFlymeVersionName != null && !sFlymeVersionName.equals("")) {
-            Pattern pattern = Pattern.compile("(\\d+\\.){2}\\d");
-            Matcher matcher = pattern.matcher(sFlymeVersionName);
+
+            Matcher matcher = mPattern.matcher(sFlymeVersionName);
             if (matcher.find()) {
                 String versionString = matcher.group();
                 if (versionString != null && !versionString.equals("")) {
@@ -220,7 +223,6 @@ public class DeviceUtil {
     }
 
 
-    @Nullable
     private static String getLowerCaseName(Properties p, Method get, String key) {
         String name = p.getProperty(key);
         if (name == null) {
@@ -229,7 +231,9 @@ public class DeviceUtil {
             } catch (Exception ignored) {
             }
         }
-        if (name != null) name = name.toLowerCase();
+        if (name != null) {
+            name = name.toLowerCase();
+        }
         return name;
     }
 

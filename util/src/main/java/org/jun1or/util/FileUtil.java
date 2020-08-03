@@ -14,12 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 文件工具类
  * Created by Junior on 2018/1/25.
+ *
+ * @author cwj
  */
 
 public class FileUtil {
 
+    /**
+     * 文件名
+     */
     private final static String TYPE_FILENAME = "filename";
+    /**
+     * 文件后缀名
+     */
     private final static String TYPE_FILEEXT = "fileext";
 
 
@@ -112,8 +121,9 @@ public class FileUtil {
         /* 获取文件的后缀名 */
         String end = "." + FileUtil.getFileExt(filepath).toLowerCase();
         for (int i = 0; i < MIME_TYPE.length; i++) {
-            if (end.equals(MIME_TYPE[i][0]))
+            if (end.equals(MIME_TYPE[i][0])) {
                 type = MIME_TYPE[i][1];
+            }
         }
         return type;
     }
@@ -195,19 +205,29 @@ public class FileUtil {
      * @return {@code true}: 删除成功<br>{@code false}: 删除失败
      */
     public static boolean deleteDir(final File dir) {
-        if (dir == null) return false;
+        if (dir == null) {
+            return false;
+        }
         // 目录不存在返回 true
-        if (!dir.exists()) return true;
+        if (!dir.exists()) {
+            return true;
+        }
         // 不是目录返回 false
-        if (!dir.isDirectory()) return false;
+        if (!dir.isDirectory()) {
+            return false;
+        }
         // 现在文件存在且是文件夹
         File[] files = dir.listFiles();
         if (files != null && files.length != 0) {
             for (File file : files) {
                 if (file.isFile()) {
-                    if (!file.delete()) return false;
+                    if (!file.delete()) {
+                        return false;
+                    }
                 } else if (file.isDirectory()) {
-                    if (!deleteDir(file)) return false;
+                    if (!deleteDir(file)) {
+                        return false;
+                    }
                 }
             }
         }
@@ -325,7 +345,9 @@ public class FileUtil {
     public static List<File> listFilesInDirWithFilter(final File dir,
                                                       final FileFilter filter,
                                                       final boolean isRecursive) {
-        if (!isDir(dir)) return null;
+        if (!isDir(dir)) {
+            return null;
+        }
         List<File> list = new ArrayList<>();
         File[] files = dir.listFiles();
         if (files != null && files.length != 0) {
@@ -392,7 +414,9 @@ public class FileUtil {
      * @return 文件长度
      */
     public static long getFileLength(final File file) {
-        if (!isFile(file)) return -1;
+        if (!isFile(file)) {
+            return -1;
+        }
         return file.length();
     }
 
@@ -424,7 +448,9 @@ public class FileUtil {
      * @return 目录长度
      */
     public static long getDirLength(final File dir) {
-        if (!isDir(dir)) return -1;
+        if (!isDir(dir)) {
+            return -1;
+        }
         long len = 0;
         File[] files = dir.listFiles();
         if (files != null && files.length != 0) {
@@ -546,10 +572,12 @@ public class FileUtil {
      * @param file
      */
     public static void writeFile(InputStream in, File file) throws IOException {
-        if (!file.getParentFile().exists())
+        if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
-        if (file != null && file.exists())
+        }
+        if (file != null && file.exists()) {
             file.delete();
+        }
         FileOutputStream out = new FileOutputStream(file);
         byte[] buffer = new byte[1024 * 128];
         int len = -1;
@@ -562,7 +590,9 @@ public class FileUtil {
     }
 
     private static boolean isSpace(final String s) {
-        if (s == null) return true;
+        if (s == null) {
+            return true;
+        }
         for (int i = 0, len = s.length(); i < len; ++i) {
             if (!Character.isWhitespace(s.charAt(i))) {
                 return false;

@@ -7,12 +7,19 @@
 
 ```gradle
 
-    implementation 'org.jun1or.baselib:util:1.0.0'
+    implementation 'org.jun1or.baselib:util:1.0.1'
 
  ```
 
 
 ## 版本记录
+
+### 1.0.1
+
+- 升级至AndroidX
+- 类名修改
+- 简化StorageUtil类
+
 
 ### 1.0.0
 

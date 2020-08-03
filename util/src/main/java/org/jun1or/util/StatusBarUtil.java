@@ -5,11 +5,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IntDef;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -17,7 +18,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
+ * 状态栏工具类
  * Created by Junior on 2018/1/25.
+ *
+ * @author cwj
  */
 
 public class StatusBarUtil {
@@ -25,8 +29,10 @@ public class StatusBarUtil {
     private final static int STATUSBAR_TYPE_DEFAULT = 0;
     private final static int STATUSBAR_TYPE_MIUI = 1;
     private final static int STATUSBAR_TYPE_FLYME = 2;
-    private final static int STATUSBAR_TYPE_ANDROID6 = 3; // Android 6.0
-    private final static int STATUS_BAR_DEFAULT_HEIGHT_DP = 25; // 大部分状态栏都是25dp
+    // Android 6.0
+    private final static int STATUSBAR_TYPE_ANDROID6 = 3;
+    // 大部分状态栏都是25dp
+    private final static int STATUS_BAR_DEFAULT_HEIGHT_DP = 25;
 
     private static @StatusBarType
     int mStatuBarType = STATUSBAR_TYPE_DEFAULT;
@@ -150,12 +156,13 @@ public class StatusBarUtil {
      * @param activity 需要被处理的 Activity
      */
     public static boolean setStatusBarLightMode(Activity activity) {
-        if (activity == null) return false;
+        if (activity == null) {
+            return false;
+        }
         // 无语系列：ZTK C2016只能时间和电池图标变色。。。。
         if (DeviceUtil.isZTKC2016()) {
             return false;
         }
-
         if (mStatuBarType != STATUSBAR_TYPE_DEFAULT) {
             return setStatusBarLightMode(activity, mStatuBarType);
         }
@@ -199,7 +206,9 @@ public class StatusBarUtil {
      * 支持 4.4 以上版本 MIUI 和 Flyme，以及 6.0 以上版本的其他 Android
      */
     public static boolean setStatusBarDarkMode(Activity activity) {
-        if (activity == null) return false;
+        if (activity == null) {
+            return false;
+        }
         if (mStatuBarType == STATUSBAR_TYPE_DEFAULT) {
             // 默认状态，不需要处理
             return true;
@@ -254,9 +263,11 @@ public class StatusBarUtil {
                 darkModeFlag = field.getInt(layoutParams);
                 Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
                 if (light) {
-                    extraFlagField.invoke(window, darkModeFlag, darkModeFlag);//状态栏透明且黑色字体
+                    //状态栏透明且黑色字体
+                    extraFlagField.invoke(window, darkModeFlag, darkModeFlag);
                 } else {
-                    extraFlagField.invoke(window, 0, darkModeFlag);//清除黑色字体
+                    //清除黑色字体
+                    extraFlagField.invoke(window, 0, darkModeFlag);
                 }
                 result = true;
             } catch (Exception ignored) {

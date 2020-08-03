@@ -2,15 +2,12 @@ package org.jun1or.util;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
 import android.util.TypedValue;
-import android.view.KeyCharacterMap;
-import android.view.KeyEvent;
-import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManager;
 
 /**
+ * 显示相关
  * Created by Junior on 2018/1/25.
  */
 
@@ -93,37 +90,6 @@ public class DisplayUtil {
                     context.getResources().getDisplayMetrics());
         }
         return actionBarHeight;
-    }
-
-
-    public static boolean isNavMenuExist(Context context) {
-        //通过判断设备是否有返回键、菜单键(不是虚拟键,是手机屏幕外的按键)来确定是否有navigation bar
-        boolean hasMenuKey = ViewConfiguration.get(context).hasPermanentMenuKey();
-        boolean hasBackKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK);
-
-        if (!hasMenuKey && !hasBackKey) {
-            // 做任何你需要做的,这个设备有一个导航栏
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 是否有硬件menu
-     *
-     * @param context
-     * @return
-     */
-    @SuppressWarnings("SimplifiableIfStatement")
-    public static boolean hasHardwareMenuKey(Context context) {
-        boolean flag;
-        if (Build.VERSION.SDK_INT < 11)
-            flag = true;
-        else if (Build.VERSION.SDK_INT >= 14) {
-            flag = ViewConfiguration.get(context).hasPermanentMenuKey();
-        } else
-            flag = false;
-        return flag;
     }
 
     /**

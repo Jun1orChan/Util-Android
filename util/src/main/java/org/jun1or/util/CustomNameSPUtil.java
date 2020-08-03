@@ -8,6 +8,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+/**
+ * 自定义SP文件工具抽象类
+ *
+ * @author cwj
+ */
 public abstract class CustomNameSPUtil {
     /**
      * 保存在手机里面的文件名

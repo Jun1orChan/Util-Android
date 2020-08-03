@@ -10,25 +10,27 @@ import android.view.inputmethod.InputMethodManager;
 import java.lang.reflect.Field;
 
 /**
+ * 虚拟键盘工具类
  * Created by Junior on 2018/1/25.
+ *
+ * @author cwj
  */
 
 public class KeyboardUtil {
 
     /**
-     * activity的根视图
+     * ctivity的根视图
      */
     private View mRootView;
     /**
      * 纪录根视图的显示高度
      */
-    int mRootViewVisibleHeight;
+    private int mRootViewVisibleHeight;
     private OnSoftKeyBoardChangeListener mOnSoftKeyBoardChangeListener;
 
     public KeyboardUtil(Activity activity) {
         //获取activity的根视图
         mRootView = activity.getWindow().getDecorView();
-
         //监听视图树中全局布局发生改变或者视图树中的某个视图的可视状态发生改变
         mRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -37,7 +39,6 @@ public class KeyboardUtil {
                 Rect r = new Rect();
                 mRootView.getWindowVisibleDisplayFrame(r);
                 int visibleHeight = r.height();
-//                System.out.println("" + visibleHeight);
                 if (mRootViewVisibleHeight == 0) {
                     mRootViewVisibleHeight = visibleHeight;
                     return;
@@ -66,18 +67,17 @@ public class KeyboardUtil {
         });
     }
 
-      /*
-      避免输入法面板遮挡
-      <p>在 manifest.xml 中 activity 中设置</p>
-      <p>android:windowSoftInputMode="adjustPan"</p>
-     */
 
     /**
      * 动态显示软键盘
+     * <p>
+     * 避免输入法面板遮挡
+     * <p>在 manifest.xml 中 activity 中设置</p>
+     * <p>android:windowSoftInputMode="adjustPan"</p>
      *
      * @param activity activity
      */
-    public static void showSoftInput(final Activity activity) {
+    public static void showSoftInput(Activity activity) {
         InputMethodManager imm =
                 (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         if (imm == null) {
@@ -95,7 +95,7 @@ public class KeyboardUtil {
      *
      * @param view 视图
      */
-    public static void showSoftInput(final View view) {
+    public static void showSoftInput(View view) {
         InputMethodManager imm =
                 (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm == null) {
@@ -112,7 +112,7 @@ public class KeyboardUtil {
      *
      * @param activity activity
      */
-    public static void hideSoftInput(final Activity activity) {
+    public static void hideSoftInput(Activity activity) {
         InputMethodManager imm =
                 (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         if (imm == null) {
@@ -130,7 +130,7 @@ public class KeyboardUtil {
      *
      * @param view 视图
      */
-    public static void hideSoftInput(final View view) {
+    public static void hideSoftInput(View view) {
         InputMethodManager imm =
                 (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm == null) {
@@ -141,6 +141,8 @@ public class KeyboardUtil {
 
     /**
      * 切换软键盘显示与否状态
+     *
+     * @param context
      */
     public static void toggleSoftInput(Context context) {
         InputMethodManager imm =
@@ -171,7 +173,6 @@ public class KeyboardUtil {
 
     /**
      * 修复软键盘内存泄漏
-     * <p>在{@link Activity#onDestroy()}中使用</p>
      *
      * @param context context
      */
@@ -212,11 +213,27 @@ public class KeyboardUtil {
 
 
     public interface OnSoftKeyBoardChangeListener {
+        /**
+         * 软键盘显示
+         *
+         * @param height 高度
+         */
         void keyBoardShow(int height);
 
+        /**
+         * 软键盘隐藏
+         *
+         * @param height 高度
+         */
         void keyBoardHide(int height);
     }
 
+    /**
+     * 设置监听器
+     *
+     * @param activity
+     * @param onSoftKeyBoardChangeListener
+     */
     public static void setListener(Activity activity, OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener) {
         KeyboardUtil softKeyBoardListener = new KeyboardUtil(activity);
         softKeyBoardListener.setOnSoftKeyBoardChangeListener(onSoftKeyBoardChangeListener);

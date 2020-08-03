@@ -3,7 +3,10 @@ package org.jun1or.util;
 import java.util.regex.Pattern;
 
 /**
+ * 正则工具类
  * Created by Junior on 2018/1/25.
+ *
+ * @author cwj
  */
 
 public class RegexUtil {

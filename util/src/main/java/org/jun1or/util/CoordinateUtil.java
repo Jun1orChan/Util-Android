@@ -3,18 +3,15 @@ package org.jun1or.util;
 import static java.lang.Math.PI;
 
 /**
- * <pre>
- *     author: Blankj
- *     blog  : http://blankj.com
- *     time  : 2018/03/21
- *     desc  : 坐标相关工具类
- * </pre>
+ * 坐标相关工具类
+ *
+ * @author cwj
  */
 public final class CoordinateUtil {
 
     private final static double X_PI = 3.14159265358979324 * 3000.0 / 180.0;
-    private final static double A    = 6378245.0;
-    private final static double EE   = 0.00669342162296594323;
+    private final static double A = 6378245.0;
+    private final static double EE = 0.00669342162296594323;
 
     /**
      * BD09 坐标转 GCJ02 坐标

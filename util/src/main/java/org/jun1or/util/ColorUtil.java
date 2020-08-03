@@ -1,8 +1,12 @@
 package org.jun1or.util;
 
 import android.graphics.Color;
-import android.support.annotation.ColorInt;
 
+import androidx.annotation.ColorInt;
+
+/**
+ * @author cwj
+ */
 public class ColorUtil {
     /**
      * 设置颜色的alpha值
@@ -12,7 +16,8 @@ public class ColorUtil {
      * @return 返回改变了 alpha 值的颜色值
      */
     public static int setColorAlpha(@ColorInt int color, float alpha) {
-        return color & 0x00ffffff | (int) (alpha * 255) << 24; // 清掉alpha信息后加上新的alpha信息
+        // 清掉alpha信息后加上新的alpha信息
+        return color & 0x00ffffff | (int) (alpha * 255) << 24;
     }
 
     /**

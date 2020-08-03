@@ -7,12 +7,9 @@ import android.content.Intent;
 import android.net.Uri;
 
 /**
- * <pre>
- *     author: Blankj
- *     blog  : http://blankj.com
- *     time  : 2016/09/25
- *     desc  : 剪贴板相关工具类
- * </pre>
+ * 剪贴板相关工具类
+ *
+ * @author cwj
  */
 public final class ClipboardUtil {
 
@@ -27,7 +24,6 @@ public final class ClipboardUtil {
      */
     public static void copyText(Context context, CharSequence text) {
         ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        //noinspection ConstantConditions
         cm.setPrimaryClip(ClipData.newPlainText("text", text));
     }
 
@@ -38,7 +34,6 @@ public final class ClipboardUtil {
      */
     public static CharSequence getText(Context context) {
         ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        //noinspection ConstantConditions
         ClipData clip = cm.getPrimaryClip();
         if (clip != null && clip.getItemCount() > 0) {
             return clip.getItemAt(0).coerceToText(context);
