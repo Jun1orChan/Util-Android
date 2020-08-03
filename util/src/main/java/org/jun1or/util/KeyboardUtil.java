@@ -15,9 +15,14 @@ import java.lang.reflect.Field;
 
 public class KeyboardUtil {
 
-
-    private View mRootView;//activity的根视图
-    int mRootViewVisibleHeight;//纪录根视图的显示高度
+    /**
+     * activity的根视图
+     */
+    private View mRootView;
+    /**
+     * 纪录根视图的显示高度
+     */
+    int mRootViewVisibleHeight;
     private OnSoftKeyBoardChangeListener mOnSoftKeyBoardChangeListener;
 
     public KeyboardUtil(Activity activity) {
@@ -31,7 +36,6 @@ public class KeyboardUtil {
                 //获取当前根视图在屏幕上显示的大小
                 Rect r = new Rect();
                 mRootView.getWindowVisibleDisplayFrame(r);
-
                 int visibleHeight = r.height();
 //                System.out.println("" + visibleHeight);
                 if (mRootViewVisibleHeight == 0) {
@@ -42,7 +46,6 @@ public class KeyboardUtil {
                 if (mRootViewVisibleHeight == visibleHeight) {
                     return;
                 }
-
                 //根视图显示高度变小超过200，可以看作软键盘显示了
                 if (mRootViewVisibleHeight - visibleHeight > 200) {
                     if (mOnSoftKeyBoardChangeListener != null) {
@@ -59,7 +62,6 @@ public class KeyboardUtil {
                     mRootViewVisibleHeight = visibleHeight;
                     return;
                 }
-
             }
         });
     }
@@ -78,9 +80,13 @@ public class KeyboardUtil {
     public static void showSoftInput(final Activity activity) {
         InputMethodManager imm =
                 (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        if (imm == null) return;
+        if (imm == null) {
+            return;
+        }
         View view = activity.getCurrentFocus();
-        if (view == null) view = new View(activity);
+        if (view == null) {
+            view = new View(activity);
+        }
         imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
     }
 
@@ -92,7 +98,9 @@ public class KeyboardUtil {
     public static void showSoftInput(final View view) {
         InputMethodManager imm =
                 (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm == null) return;
+        if (imm == null) {
+            return;
+        }
         view.setFocusable(true);
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -107,9 +115,13 @@ public class KeyboardUtil {
     public static void hideSoftInput(final Activity activity) {
         InputMethodManager imm =
                 (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        if (imm == null) return;
+        if (imm == null) {
+            return;
+        }
         View view = activity.getCurrentFocus();
-        if (view == null) view = new View(activity);
+        if (view == null) {
+            view = new View(activity);
+        }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
@@ -121,7 +133,9 @@ public class KeyboardUtil {
     public static void hideSoftInput(final View view) {
         InputMethodManager imm =
                 (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm == null) return;
+        if (imm == null) {
+            return;
+        }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
@@ -131,7 +145,9 @@ public class KeyboardUtil {
     public static void toggleSoftInput(Context context) {
         InputMethodManager imm =
                 (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm == null) return;
+        if (imm == null) {
+            return;
+        }
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
@@ -160,20 +176,28 @@ public class KeyboardUtil {
      * @param context context
      */
     public static void fixSoftInputLeaks(final Context context) {
-        if (context == null) return;
+        if (context == null) {
+            return;
+        }
         InputMethodManager imm =
                 (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm == null) return;
+        if (imm == null) {
+            return;
+        }
         String[] strArr = new String[]{"mCurRootView", "mServedView", "mNextServedView"};
         for (int i = 0; i < 3; i++) {
             try {
                 Field declaredField = imm.getClass().getDeclaredField(strArr[i]);
-                if (declaredField == null) continue;
+                if (declaredField == null) {
+                    continue;
+                }
                 if (!declaredField.isAccessible()) {
                     declaredField.setAccessible(true);
                 }
                 Object obj = declaredField.get(imm);
-                if (obj == null || !(obj instanceof View)) continue;
+                if (obj == null || !(obj instanceof View)) {
+                    continue;
+                }
                 View view = (View) obj;
                 if (view.getContext() == context) {
                     declaredField.set(imm, null);
