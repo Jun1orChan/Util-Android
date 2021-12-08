@@ -18,11 +18,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        //公司内网
-        maven {
-            allowInsecureProtocol = true
-            url 'http://maven.testreg.99.com/repository/maven-android/'
-        }
     }
 }
 
