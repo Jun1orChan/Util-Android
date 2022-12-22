@@ -11,11 +11,15 @@
 2.模块build.gradle文件中添加
 
 ```gradle
-    implementation 'com.github.Jun1orChan:Util-Android:1.2.0'
+    implementation 'com.github.Jun1orChan:Util-Android:1.2.1'
  ```
 
 
 ## 版本记录
+
+### 1.2.1
+
+- 新增UriUtil
 
 ### 1.2.0
 
