@@ -4,7 +4,14 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        maven {
+            url 'https://jitpack.io'
+        }
+        maven {
+            url 'https://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        maven { url 'https://maven.aliyun.com/repositories/jcenter' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.0'
@@ -17,12 +24,14 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
-        //公司内网
+        mavenCentral()
         maven {
-            allowInsecureProtocol = true
-            url 'http://maven.testreg.99.com/repository/maven-android/'
+            url 'https://jitpack.io'
         }
+        maven {
+            url 'https://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        maven { url 'https://maven.aliyun.com/repositories/jcenter' }
     }
 }
 
