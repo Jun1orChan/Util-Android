@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnCss2Pinyin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="汉字转拼音"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:id="@+id/btnCss2PinyinWithSplit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="汉字转拼音（带分隔符）"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:id="@+id/btnPinyinFirstLetter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="获取第一个汉字首字母"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:id="@+id/btnPinyinFirstLetters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="获取所有汉字的首字母"
+        android:textAllCaps="false"/>
+
+
+    <Button
+        android:id="@+id/btnSurnamePinyin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="根据名字获取姓氏的拼音"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:id="@+id/btnSurnameFirstLetter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="根据名字获取姓氏的首字母"
+        android:textAllCaps="false"/>
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
