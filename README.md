@@ -6,15 +6,11 @@
 1.项目根目录build.gradle文件中添加
 
 ```gradle
-    maven { 
-    allowInsecureProtocol = true
-    url 'http://maven.testreg.99.com/repository/maven-android/' 
-    }
+    
 ```
 2.模块build.gradle文件中添加
 
 ```gradle
-    implementation 'com.nd.baselib:util:1.3.0'
 
  ```
 
